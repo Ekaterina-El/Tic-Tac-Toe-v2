@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Tic Tac Toe</string>
     <string name="author">© Elka</string>
+    <string name="main_screen_title">Game Settings</string>
+    <string name="board_size">Board Size</string>
+    <string name="with_robot">With Robot</string>
+    <string name="with_friend">With Friend</string>
 </resources>

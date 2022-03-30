@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="btn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_wrapper</item>
+        <item name="android:padding">@dimen/btn_padding</item>
+    </style>
+
+    <style name="btn_image">
+        <item name="android:layout_marginHorizontal">@dimen/image_margin</item>
+        <item name="android:layout_width">@dimen/btn_image_size</item>
+        <item name="android:layout_height">@dimen/btn_image_size</item>
+    </style>
+
+</resources>

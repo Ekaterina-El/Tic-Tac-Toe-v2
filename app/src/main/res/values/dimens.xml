@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_padding_horiz">40dp</dimen>
+    <dimen name="add_padding_ver">50dp</dimen>
+    <dimen name="board_size_mt">40dp</dimen>
+    <dimen name="board_size_mb">20dp</dimen>
+
+
+</resources>
