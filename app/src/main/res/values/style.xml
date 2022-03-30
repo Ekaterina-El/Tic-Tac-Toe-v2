@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="text">
+
+        <item name="android:textColor">@color/main_text_color</item>
+    </style>
+
+    <style name="large" parent="text">
+        <item name="android:textSize">@dimen/large_text</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+
+    </style>
+
+    <style name="normal" parent="text">
+        <item name="android:textSize">@dimen/normal_text</item>
+        <item name="android:fontFamily">@font/montserrat_light</item>
+
+    </style>
+</resources>
