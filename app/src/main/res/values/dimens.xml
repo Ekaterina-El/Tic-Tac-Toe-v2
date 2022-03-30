@@ -4,6 +4,13 @@
     <dimen name="add_padding_ver">50dp</dimen>
     <dimen name="board_size_mt">40dp</dimen>
     <dimen name="board_size_mb">20dp</dimen>
+    <dimen name="game_board_size">300dp</dimen>
+    <dimen name="game_board_margin">45dp</dimen>
+    <dimen name="btn_corners_rad">7dp</dimen>
+    <dimen name="cup_size">35dp</dimen>
+    <dimen name="player_state_ml">30dp</dimen>
+    <dimen name="player_state_title_mb">5dp</dimen>
+    <dimen name="quit_mt">60dp</dimen>
 
 
 </resources>

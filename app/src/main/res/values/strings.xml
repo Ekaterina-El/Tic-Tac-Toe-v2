@@ -5,4 +5,7 @@
     <string name="board_size">Board Size</string>
     <string name="with_robot">With Robot</string>
     <string name="with_friend">With Friend</string>
+    <string name="quit">Quit</string>
+    <string name="player_0">Player 0</string>
+    <string name="player_x">Player X</string>
 </resources>

@@ -25,4 +25,9 @@
         <item name="android:textSize">@dimen/medium_text</item>
         <item name="android:fontFamily">@font/montserrat_semi_bold</item>
     </style>
+
+    <style name="medium_l" parent="text">
+        <item name="android:textSize">@dimen/medium_text</item>
+        <item name="android:fontFamily">@font/montserrat_light</item>
+    </style>
 </resources>
