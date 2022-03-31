@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashScreenFragment">
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="el.ka.tictactoe.screens.splashScreen.SplashScreenFragment"
+        android:label="SplashScreenFragment" >
+        <action
+            android:id="@+id/action_splashScreenFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainScreenFragment"
+        android:name="el.ka.tictactoe.screens.mainScreen.MainScreenFragment"
+        android:label="MainScreenFragment" >
+        <action
+            android:id="@+id/action_mainScreenFragment_to_gameScreenFragment"
+            app:destination="@id/gameScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameScreenFragment"
+        android:name="el.ka.tictactoe.screens.gameScreen.GameScreenFragment"
+        android:label="GameScreenFragment" >
+        <action
+            android:id="@+id/action_gameScreenFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+    </fragment>
+</navigation>
