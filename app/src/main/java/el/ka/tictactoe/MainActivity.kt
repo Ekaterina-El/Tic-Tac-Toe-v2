@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         initApp(this)
 
-
         supportActionBar?.hide()
     }
 }
