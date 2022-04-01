@@ -26,5 +26,10 @@
         <action
             android:id="@+id/action_gameScreenFragment_to_mainScreenFragment"
             app:destination="@id/mainScreenFragment" />
+
+        <argument android:name="withWhom"
+            android:defaultValue="Robot"
+            app:nullable="false"
+            app:argType="el.ka.tictactoe.general.GameType" />
     </fragment>
 </navigation>

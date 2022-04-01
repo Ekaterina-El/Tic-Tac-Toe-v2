@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/bg_with_x_o" />
+            android:src="@drawable/bg_with_x_o"
+            android:contentDescription="@string/bg" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -58,7 +59,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:onClick="@{()->fragmentViewModel.decCurrentBoardSize()}"
-                        android:src="@drawable/ic_arr_back" />
+                        android:src="@drawable/ic_arr_back"
+                        android:contentDescription="@string/decrement_board_size" />
 
                     <TextView
                         android:id="@+id/board_size_value"
@@ -76,16 +78,19 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:onClick="@{()->fragmentViewModel.incCurrentBoardSize()}"
-                        android:src="@drawable/ic_arr_next" />
+                        android:src="@drawable/ic_arr_next"
+                        android:contentDescription="@string/increment_board_size" />
                 </LinearLayout>
 
                 <LinearLayout
                     style="@style/btn"
-                    android:layout_marginTop="@dimen/btns_mt">
+                    android:layout_marginTop="@dimen/btns_mt"
+                    android:onClick="@{() -> fragmentViewModel.startGameWithRobot()}">
 
                     <ImageView
                         style="@style/btn_image"
-                        android:src="@drawable/ic_robot" />
+                        android:src="@drawable/ic_robot"
+                        android:contentDescription="@string/robot" />
 
                     <TextView
                         style="@style/semi_bold"
@@ -96,7 +101,8 @@
 
                 <LinearLayout
                     style="@style/btn"
-                    android:layout_marginTop="@dimen/btns_mt">
+                    android:layout_marginTop="@dimen/btns_mt"
+                    android:onClick="@{() -> fragmentViewModel.startGameWithFriend()}">
 
 
                     <TextView
@@ -107,7 +113,8 @@
 
                     <ImageView
                         style="@style/btn_image"
-                        android:src="@drawable/ic_friend" />
+                        android:src="@drawable/ic_friend"
+                        android:contentDescription="@string/friend" />
                 </LinearLayout>
             </LinearLayout>
 

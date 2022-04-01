@@ -10,3 +10,9 @@ lateinit var APP: MainActivity
 fun initApp(mainApp: MainActivity) {
     APP = mainApp
 }
+
+enum class GameType(val index: Int) {
+    Robot(1),
+    Friend(2)
+}
+const val GameTypeKey = "GameType"

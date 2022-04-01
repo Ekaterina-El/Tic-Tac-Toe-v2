@@ -1,13 +1,14 @@
 package el.ka.tictactoe.screens.mainScreen
 
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import el.ka.tictactoe.general.MAX_BOARD_SIZE
-import el.ka.tictactoe.general.MIN_BOARD_SIZE
+import el.ka.tictactoe.R
+import el.ka.tictactoe.general.*
 
 class MainScreenViewModel: ViewModel() {
-    private val _currentBoardSize = MutableLiveData<Int>()
+    private val _currentBoardSize = MutableLiveData(3)
     val currentBoardSize: LiveData<Int>
         get() = _currentBoardSize
 
@@ -23,7 +24,17 @@ class MainScreenViewModel: ViewModel() {
         }
     }
 
-    init {
-        _currentBoardSize.value = 3
+    private fun startGame(gameType: GameType) {
+        val bundle = Bundle()
+        bundle.putSerializable(GameTypeKey, gameType)
+        APP.navController.navigate(R.id.action_mainScreenFragment_to_gameScreenFragment, bundle)
+    }
+
+    fun startGameWithRobot() {
+        startGame(GameType.Robot)
+    }
+
+    fun startGameWithFriend() {
+        startGame(GameType.Friend)
     }
 }

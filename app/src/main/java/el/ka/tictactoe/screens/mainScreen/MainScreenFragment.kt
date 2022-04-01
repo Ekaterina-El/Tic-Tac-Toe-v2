@@ -6,7 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import el.ka.tictactoe.R
 import el.ka.tictactoe.databinding.MainScreenBinding
+import el.ka.tictactoe.general.APP
+import el.ka.tictactoe.general.GameType
+import el.ka.tictactoe.general.GameTypeKey
 
 class MainScreenFragment : Fragment() {
     private lateinit var binding: MainScreenBinding
@@ -27,7 +31,7 @@ class MainScreenFragment : Fragment() {
     }
 
     private fun initBinding(inflater: LayoutInflater) {
-        val binding = MainScreenBinding.inflate(inflater)
+        binding = MainScreenBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.fragmentViewModel = viewModel
     }
@@ -35,6 +39,5 @@ class MainScreenFragment : Fragment() {
     private fun createViewModel() {
         viewModel = ViewModelProvider(this).get(MainScreenViewModel::class.java)
     }
-
 
 }

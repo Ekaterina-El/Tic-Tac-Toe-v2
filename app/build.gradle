@@ -2,8 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.android.extensions'
-
 }
+
 
 android {
     compileSdk 32
@@ -52,4 +52,5 @@ dependencies {
     // Корунтины
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android'
+
 }

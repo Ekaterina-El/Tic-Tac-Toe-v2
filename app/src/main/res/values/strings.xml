@@ -8,4 +8,9 @@
     <string name="quit">Quit</string>
     <string name="player_0">Player 0</string>
     <string name="player_x">Player X</string>
+    <string name="bg">Bg</string>
+    <string name="decrement_board_size">Decrement board size</string>
+    <string name="increment_board_size">Increment board size</string>
+    <string name="friend">Friend</string>
+    <string name="robot">Robot</string>
 </resources>
