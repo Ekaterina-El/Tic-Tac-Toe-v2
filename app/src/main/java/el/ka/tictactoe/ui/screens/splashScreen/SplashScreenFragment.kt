@@ -1,4 +1,4 @@
-package el.ka.tictactoe.screens.splashScreen
+package el.ka.tictactoe.ui.screens.splashScreen
 
 import android.annotation.SuppressLint
 import android.os.Bundle

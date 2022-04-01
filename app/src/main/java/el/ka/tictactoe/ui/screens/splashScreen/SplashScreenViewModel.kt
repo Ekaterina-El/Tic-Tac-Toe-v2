@@ -1,4 +1,4 @@
-package el.ka.tictactoe.screens.splashScreen
+package el.ka.tictactoe.ui.screens.splashScreen
 
 import androidx.lifecycle.ViewModel
 import el.ka.tictactoe.R

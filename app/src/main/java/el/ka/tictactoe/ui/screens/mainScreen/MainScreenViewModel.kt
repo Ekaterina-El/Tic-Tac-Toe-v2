@@ -1,4 +1,4 @@
-package el.ka.tictactoe.screens.mainScreen
+package el.ka.tictactoe.ui.screens.mainScreen
 
 import android.os.Bundle
 import androidx.lifecycle.LiveData

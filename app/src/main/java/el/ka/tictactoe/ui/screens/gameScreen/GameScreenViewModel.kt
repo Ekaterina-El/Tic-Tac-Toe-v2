@@ -1,4 +1,4 @@
-package el.ka.tictactoe.screens.gameScreen
+package el.ka.tictactoe.ui.screens.gameScreen
 
 import android.graphics.Color
 import androidx.lifecycle.LiveData

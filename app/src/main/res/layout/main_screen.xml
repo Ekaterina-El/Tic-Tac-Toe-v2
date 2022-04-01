@@ -6,7 +6,7 @@
 
         <variable
             name="fragmentViewModel"
-            type="el.ka.tictactoe.screens.mainScreen.MainScreenViewModel" />
+            type="el.ka.tictactoe.ui.screens.mainScreen.MainScreenViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

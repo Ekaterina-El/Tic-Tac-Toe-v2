@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="fragmentViewModel"
-            type="el.ka.tictactoe.screens.gameScreen.GameScreenViewModel" />
+            type="el.ka.tictactoe.ui.screens.gameScreen.GameScreenViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,10 +41,10 @@
                     android:text="@{@string/current_player(fragmentViewModel.currentPlayer)}"
                     tools:text="Player X" />
 
-                <View
-                    android:onClick="@{() -> fragmentViewModel.makeMove()}"
+                <el.ka.tictactoe.ui.customView.GameBoardView
                     android:layout_width="@dimen/game_board_size"
                     android:layout_height="@dimen/game_board_size"
+                    app:size="@dimen/game_board_size"
                     android:layout_marginVertical="@dimen/game_board_margin"
                     android:background="#2663DD" />
 
