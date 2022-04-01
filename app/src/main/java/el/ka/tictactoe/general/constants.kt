@@ -15,4 +15,17 @@ enum class GameType(val index: Int) {
     Robot(1),
     Friend(2)
 }
+
+enum class Player {
+    X,
+    O;
+
+    operator fun not(): Player {
+        return when(this) {
+            X -> O
+            O -> X
+            else -> X
+        }
+    }
+}
 const val GameTypeKey = "GameType"

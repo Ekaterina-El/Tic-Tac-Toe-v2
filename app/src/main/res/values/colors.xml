@@ -14,4 +14,6 @@
 
     <color name="bg">#FEFFFF</color>
     <color name="main_text_color">#fff</color>
+    <color name="cup_win">#FFB802</color>
+    <color name="cup_empty">#fff</color>
 </resources>

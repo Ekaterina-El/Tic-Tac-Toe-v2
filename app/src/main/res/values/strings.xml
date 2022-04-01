@@ -13,4 +13,5 @@
     <string name="increment_board_size">Increment board size</string>
     <string name="friend">Friend</string>
     <string name="robot">Robot</string>
+    <string name="current_player">Player %s</string>
 </resources>
