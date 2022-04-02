@@ -26,7 +26,9 @@ class MainScreenViewModel: ViewModel() {
 
     private fun startGame(gameType: GameType) {
         val bundle = Bundle()
-        bundle.putSerializable(GameTypeKey, gameType)
+        bundle.putSerializable(GAME_TYPE_KEY, gameType)
+        bundle.putInt(GAME_BOARD_SIZE, currentBoardSize.value!!)
+
         APP.navController.navigate(R.id.action_mainScreenFragment_to_gameScreenFragment, bundle)
     }
 

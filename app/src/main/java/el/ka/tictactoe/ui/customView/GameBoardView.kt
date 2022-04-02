@@ -12,13 +12,32 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 
 class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private var attr: TypedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.GameBoardView, 0, 0)
+    private var attr: TypedArray =
+        context.theme.obtainStyledAttributes(attrs, R.styleable.GameBoardView, 0, 0)
     private val paint: Paint = Paint()
     private var size = 0F
+
+    private var _boardSize = 0
+    val boardSize: Int
+        get() = _boardSize
+
+    fun setBoardSize(newSize: Int) {
+        _boardSize = newSize
+//        invalidate()
+    }
 
     init {
         size = attr.getDimension(
             R.styleable.GameBoardView_size, defSize.toFloat()
+        )
+
+
+        val boardSize = attr.getInteger(
+            R.styleable.GameBoardView_boardSize,
+            defBoardSize
+        )
+        setBoardSize(
+            boardSize
         )
 
         paint.style = Paint.Style.STROKE
@@ -31,7 +50,6 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         val heightSize = MeasureSpec.getSize(heightMeasureSpec)
-
 
 
         val width = when (widthMode) {
@@ -52,15 +70,17 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawCircle(
-            (width/2).toFloat(),
-            (height/2).toFloat(),
-            (width/2).toFloat(),
+            (width / 2).toFloat(),
+            (height / 2).toFloat(),
+            (width / 2).toFloat(),
             paint
         )
         super.onDraw(canvas)
 
     }
+
     companion object {
         const val defSize = 300
+        const val defBoardSize = 3
     }
 }

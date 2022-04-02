@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="GameBoardView">
-        
-        <attr name="size" format="dimension"/>
+
+        <attr name="size" format="dimension" />
+        <attr name="boardSize" format="integer" />
     </declare-styleable>
 </resources>

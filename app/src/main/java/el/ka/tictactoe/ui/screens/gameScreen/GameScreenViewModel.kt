@@ -9,8 +9,7 @@ import el.ka.tictactoe.general.GameType
 import el.ka.tictactoe.general.Player
 
 class GameScreenViewModel: ViewModel() {
-    val cupWin = Color.BLACK
-    val cupEmpty = Color.RED
+
 
     private val _gameType = MutableLiveData(GameType.Robot)
     val gameType: LiveData<GameType>
@@ -44,5 +43,14 @@ class GameScreenViewModel: ViewModel() {
 
     fun setGameType(gameType: GameType) {
         _gameType.value = gameType
+    }
+
+
+    private val _gameBoardSize = MutableLiveData(0)
+    val gameBoardSize: LiveData<Int>
+        get() = _gameBoardSize
+
+    fun setGameBoardSize(gameSize: Int) {
+        _gameBoardSize.value = gameSize
     }
 }

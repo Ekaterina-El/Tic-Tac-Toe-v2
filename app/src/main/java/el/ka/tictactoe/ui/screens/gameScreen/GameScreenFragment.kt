@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import el.ka.tictactoe.databinding.GameScreenBinding
+import el.ka.tictactoe.general.GAME_BOARD_SIZE
 import el.ka.tictactoe.general.GameType
-import el.ka.tictactoe.general.GameTypeKey
+import el.ka.tictactoe.general.GAME_TYPE_KEY
 
 class GameScreenFragment : Fragment() {
+    private lateinit var gameBoardObserver: Observer<Int>
     private lateinit var viewModel: GameScreenViewModel
     private lateinit var binding: GameScreenBinding
 
@@ -42,7 +45,21 @@ class GameScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val gameType = requireArguments().getSerializable(GameTypeKey) as GameType
+        val gameType = requireArguments().getSerializable(GAME_TYPE_KEY) as GameType
+        val gameSize = requireArguments().getInt(GAME_BOARD_SIZE)
+
+        viewModel.setGameBoardSize(gameSize)
         viewModel.setGameType(gameType)
+
+        gameBoardObserver = Observer<Int> { value ->
+            binding.gameBoard.setBoardSize(value)
+        }
+        viewModel.gameBoardSize.observe(viewLifecycleOwner, gameBoardObserver)
+
+    }
+
+    override fun onDestroy() {
+        viewModel.gameBoardSize.removeObserver(gameBoardObserver)
+        super.onDestroy()
     }
 }

@@ -28,4 +28,5 @@ enum class Player {
         }
     }
 }
-const val GameTypeKey = "GameType"
+const val GAME_TYPE_KEY = "GameType"
+const val GAME_BOARD_SIZE = "GameBoardSize"

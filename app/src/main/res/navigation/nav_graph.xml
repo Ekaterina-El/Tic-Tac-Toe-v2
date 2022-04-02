@@ -31,5 +31,9 @@
             android:defaultValue="Robot"
             app:nullable="false"
             app:argType="el.ka.tictactoe.general.GameType" />
+
+        <argument android:name="boardSize"
+            android:defaultValue="3"
+            app:argType="integer" />
     </fragment>
 </navigation>
