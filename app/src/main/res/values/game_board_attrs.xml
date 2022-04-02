@@ -2,7 +2,6 @@
 <resources>
     <declare-styleable name="GameBoardView">
 
-        <attr name="size" format="dimension" />
-        <attr name="boardSize" format="integer" />
+        <attr name="countOfCells" format="integer" />
     </declare-styleable>
 </resources>

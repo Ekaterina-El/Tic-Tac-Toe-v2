@@ -52,7 +52,7 @@ class GameScreenFragment : Fragment() {
         viewModel.setGameType(gameType)
 
         gameBoardObserver = Observer<Int> { value ->
-            binding.gameBoard.setBoardSize(value)
+            binding.gameBoard.setCountOfCells(value)
         }
         viewModel.gameBoardSize.observe(viewLifecycleOwner, gameBoardObserver)
 
