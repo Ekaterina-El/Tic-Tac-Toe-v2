@@ -1,17 +1,21 @@
 package el.ka.tictactoe.ui.customView
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Rect
+import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import el.ka.tictactoe.R
 import kotlin.math.min
 
 class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+    private val playerOChoice = mutableListOf<Int>()
+    private val playerXChoice = mutableListOf<Int>()
+
+    private lateinit var currentPlayer: Player
     private var boardStateList = mutableListOf<State>()
     private var boardList = mutableListOf<Rect>()
 
@@ -29,13 +33,13 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
         _countOfCells = newSize
         if (boardSize > 0) {
             initBoard()
-            //        invalidate()
         }
     }
 
     private var attr: TypedArray =
         context.theme.obtainStyledAttributes(attrs, R.styleable.GameBoardView, 0, 0)
 
+    private val path = Path()
     private val paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
 
@@ -45,8 +49,11 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
     }
 
     private var borderColor = Color.BLACK
+    private var crossColor = Color.BLACK
+    private var circleColor = Color.BLACK
 
     init {
+        startGame()
         borderColor = attr.getColor(
             R.styleable.GameBoardView_borderColor,
             Color.BLACK
@@ -60,6 +67,10 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
             boardSize
         )
 
+    }
+
+    fun startGame() {
+        currentPlayer = Player.X
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -129,20 +140,41 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
 
     override fun onDraw(canvas: Canvas) {
-        if (redrawBoard) {
-            drawBoard(canvas)
-            redrawBoard = false
-        }
+        drawBoard(canvas)
+        drawCells(canvas)
         super.onDraw(canvas)
 
     }
 
-    /*private fun drawBoard(canvas: Canvas) {
-        paint.color = boardColor
-        boardList.forEachIndexed { index, rect ->
-            canvas.drawRect(rect, paint)
+    private fun drawCells(canvas: Canvas) {
+        boardList.forEachIndexed { index, cell ->
+            when (boardStateList[index]) {
+                State.Circle -> drawCircle(canvas, cell)
+                State.Cross -> drawCross(canvas, cell)
+            }
         }
-    }*/
+    }
+
+    private fun drawCross(canvas: Canvas, block: Rect) {
+        paint.color = crossColor
+        val offset = ((block.right - block.left) * 0.2).toInt()
+        path.moveTo(block.left.toFloat() + offset, block.top.toFloat() + offset)
+        path.lineTo(block.right.toFloat() - offset, block.bottom.toFloat() - offset)
+        path.moveTo(block.right.toFloat() - offset, block.top.toFloat() + offset)
+        path.lineTo(block.left.toFloat() + offset, block.bottom.toFloat() - offset)
+        canvas.drawPath(path, paint)
+    }
+
+    private fun drawCircle(canvas: Canvas, block: Rect) {
+        paint.color = circleColor
+        canvas.drawCircle(
+            block.exactCenterX(),
+            block.exactCenterY(),
+            boardSize.toFloat() / 3,
+            paint
+        )
+    }
+
 
     private fun drawBoard(canvas: Canvas) {
         paint.color = borderColor
@@ -177,6 +209,40 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
         }
     }
 
+    // region Слушатели событий
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        event?.let { motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_UP -> updateBoardState(event)
+                else -> true
+            }
+        }
+        return true
+    }
+
+    private fun updateBoardState(event: MotionEvent): Boolean {
+        boardList.find { rect ->
+            rect.contains(event.x.toInt(), event.y.toInt())
+        }?.apply {
+            val index = boardList.indexOf(this)
+            if (boardStateList[index] != State.Blank) return true
+
+            if (currentPlayer == Player.X) {
+                playerXChoice.add(index)
+                boardStateList[index] = State.Cross
+            } else {
+                playerOChoice.add(index)
+                boardStateList[index] = State.Circle
+            }
+            //findWinner()
+            currentPlayer = currentPlayer.not()
+            invalidate()
+        }
+        return true
+    }
+    // endregion
+
     companion object {
         const val defCountOfCells = 3
         const val DEFAULT_STROKE_WIDTH = 2F
@@ -185,6 +251,18 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
             Blank,
             Cross,
             Circle
+        }
+
+        enum class Player {
+            X,
+            O;
+
+            operator fun not(): Player {
+                return when (this) {
+                    X -> O
+                    O -> X
+                }
+            }
         }
     }
 }
