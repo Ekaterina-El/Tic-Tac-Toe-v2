@@ -44,9 +44,14 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
         strokeWidth = density * DEFAULT_STROKE_WIDTH
     }
 
-    val borderColor = Color.BLACK
+    private var borderColor = Color.BLACK
 
     init {
+        borderColor = attr.getColor(
+            R.styleable.GameBoardView_borderColor,
+            Color.BLACK
+        )
+
         val boardSize = attr.getInteger(
             R.styleable.GameBoardView_countOfCells,
             defCountOfCells

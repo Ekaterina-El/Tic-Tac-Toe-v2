@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="boardColor">#0097C6</color>
+    <color name="boardColor">#fff</color>
     <color name="crossColor">#F3A723</color>
     <color name="circleColor">#4EE3C2</color>
 

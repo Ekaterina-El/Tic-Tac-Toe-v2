@@ -3,5 +3,6 @@
     <declare-styleable name="GameBoardView">
 
         <attr name="countOfCells" format="integer" />
+        <attr name="borderColor" format="color" />
     </declare-styleable>
 </resources>
