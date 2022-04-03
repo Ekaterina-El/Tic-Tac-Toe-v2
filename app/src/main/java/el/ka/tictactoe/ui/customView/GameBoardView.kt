@@ -12,6 +12,7 @@ import el.ka.tictactoe.R
 import kotlin.math.min
 
 class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+    private val winLines = mutableListOf<MutableList<Int>>()
     private val playerOChoice = mutableListOf<Int>()
     private val playerXChoice = mutableListOf<Int>()
     private val winnerChoice = mutableListOf<Int>()
@@ -35,6 +36,7 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
         if (boardSize > 0) {
             initBoard()
         }
+        createSolutions(newSize)
     }
 
     private var attr: TypedArray =
@@ -272,10 +274,10 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
     private fun findWinner() {
         val state = if (currentPlayer == Player.X) {
-            if (playerXChoice.size < 3) return
+            if (playerXChoice.size < countOfCells) return
             State.Cross
         } else {
-            if (playerOChoice.size < 3) return
+            if (playerOChoice.size < countOfCells) return
             State.Circle
         }
 
@@ -284,26 +286,11 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
             isDraw() -> Log.d("Find_Winner", "End in a draw")
             else -> return
         }
-
-//        isResetting = true
     }
 
     private fun isWin(player: State): Boolean {
-        val winLine = arrayListOf(
-            arrayListOf(0, 1, 2),
-            arrayListOf(3, 4, 5),
-            arrayListOf(6, 7, 8),
-
-            arrayListOf(0, 3, 6),
-            arrayListOf(1, 4, 7),
-            arrayListOf(2, 5, 8),
-
-            arrayListOf(0, 4, 8),
-            arrayListOf(2, 4, 6),
-        )
-
-        for (i in 0 until winLine.size) {
-            if (checkLine(player, winLine[i])) {
+        for (i in 0 until winLines.size) {
+            if (checkLine(player, winLines[i])) {
                 return true
             }
         }
@@ -311,7 +298,50 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
         return false
     }
 
-    private fun checkLine(player: State, solution: ArrayList<Int>): Boolean {
+    private fun createSolutions(size: Int) {
+        winLines.clear()
+
+        // по горизонтале
+        for (row in 0 until size) {
+            val solution = mutableListOf<Int>()
+            for (col in 0 until size) {
+               solution.add(size * row + col)
+            }
+            winLines.add(solution)
+        }
+
+        // по вертикале
+        winLines.addAll(rowToCol(winLines))
+
+
+        // диагонали
+        val d1 = mutableListOf<Int>()
+        val d2 = mutableListOf<Int>()
+
+        for ((row, col) in (0 until size).withIndex()) {
+            d1.add(row * size + col)
+                d2.add(row*size + (size-col-1))
+        }
+
+        winLines.add(d1)
+        winLines.add(d2)
+    }
+
+    private fun rowToCol(winLines: MutableList<MutableList<Int>>): MutableList<MutableList<Int>> {
+        val result = mutableListOf<MutableList<Int>>()
+
+        for (col in 0 until winLines.size) {
+            val r = mutableListOf<Int>()
+            for (row in 0 until winLines.size) {
+                r.add(winLines[row][col])
+            }
+            result.add(r)
+        }
+
+        return result
+    }
+
+    private fun checkLine(player: State, solution: MutableList<Int>): Boolean {
         val response = when (player) {
             State.Cross -> {
                 solution.all {
