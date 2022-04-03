@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import el.ka.tictactoe.R
@@ -13,6 +14,7 @@ import kotlin.math.min
 class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val playerOChoice = mutableListOf<Int>()
     private val playerXChoice = mutableListOf<Int>()
+    private val winnerChoice = mutableListOf<Int>()
 
     private lateinit var currentPlayer: Player
     private var boardStateList = mutableListOf<State>()
@@ -50,6 +52,8 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
     private var borderColor = Color.BLACK
     private var crossColor = Color.BLACK
     private var circleColor = Color.BLACK
+    private var winnerLineColor = Color.BLACK
+
 
     init {
         startNewGame()
@@ -149,10 +153,25 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
 
     override fun onDraw(canvas: Canvas) {
+        if (winnerChoice.size != 0) {
+            drawWinnerLine(canvas)
+        }
         drawBoard(canvas)
         drawCells(canvas)
+
+
         super.onDraw(canvas)
 
+    }
+
+    private fun drawWinnerLine(canvas: Canvas) {
+        paint.color = winnerLineColor
+
+        val start = boardList[winnerChoice.first()]
+        val end = boardList[winnerChoice.last()]
+        path.moveTo(start.exactCenterX(), start.exactCenterY())
+        path.lineTo(end.exactCenterX(), end.exactCenterY())
+        canvas.drawPath(path, paint)
     }
 
     private fun drawCells(canvas: Canvas) {
@@ -244,12 +263,76 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
                 playerOChoice.add(index)
                 boardStateList[index] = State.Circle
             }
-            //findWinner()
+            findWinner()
             currentPlayer = currentPlayer.not()
             invalidate()
         }
         return true
     }
+
+    private fun findWinner() {
+        val state = if (currentPlayer == Player.X) {
+            if (playerXChoice.size < 3) return
+            State.Cross
+        } else {
+            if (playerOChoice.size < 3) return
+            State.Circle
+        }
+
+        when {
+            isWin(state) -> Log.d("Find_Winner", "${state} was won")
+            isDraw() -> Log.d("Find_Winner", "End in a draw")
+            else -> return
+        }
+
+//        isResetting = true
+    }
+
+    private fun isWin(player: State): Boolean {
+        val winLine = arrayListOf(
+            arrayListOf(0, 1, 2),
+            arrayListOf(3, 4, 5),
+            arrayListOf(6, 7, 8),
+
+            arrayListOf(0, 3, 6),
+            arrayListOf(1, 4, 7),
+            arrayListOf(2, 5, 8),
+
+            arrayListOf(0, 4, 8),
+            arrayListOf(2, 4, 6),
+        )
+
+        for (i in 0 until winLine.size) {
+            if (checkLine(player, winLine[i])) {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    private fun checkLine(player: State, solution: ArrayList<Int>): Boolean {
+        val response = when (player) {
+            State.Cross -> {
+                solution.all {
+                    playerXChoice.contains(it)
+                }
+            }
+            State.Circle -> {
+                solution.all {
+                    playerOChoice.contains(it)
+                }
+            }
+            else -> false
+        }
+
+        if (response) {
+            winnerChoice.addAll(solution)
+        }
+        return response
+    }
+
+    private fun isDraw(): Boolean = playerOChoice.size + playerXChoice.size == countOfCells*countOfCells
     // endregion
 
     companion object {
@@ -276,192 +359,3 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
     }
 }
 
-/*
-class GameBoardView(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
-    private var boardStateList = mutableListOf<State>()
-    private var boardList = mutableListOf<Rect>()
-
-    private var attr: TypedArray =
-        context.theme.obtainStyledAttributes(attrs, R.styleable.GameBoardView, 0, 0)
-
-    private val paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.STROKE
-
-        val displayMetrics = context.resources.displayMetrics
-        val density = displayMetrics.density
-        strokeWidth = density * DEFAULT_STROKE_WIDTH
-    }
-
-    private var size = 0
-    private var boardSize = 300
-
-    private var borderColor = Color.BLACK
-
-
-    private var _countOfCells = 0
-    val countOfCells: Int
-        get() = _countOfCells
-
-    fun setCountOfCells(newSize: Int) {
-        _countOfCells = newSize
-//        invalidate()
-    }
-
-    init {
-        isSaveEnabled = true
-
-        setCountOfCells(
-            attr.getInteger(
-                R.styleable.GameBoardView_boardSize,
-                3
-            )
-        )
-
-        initBoardState()
-    }
-
-    private fun initBoardState() {
-        for (index in 1..(countOfCells * countOfCells)) {
-            boardStateList.add(State.Blank)
-        }
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        /*val widthMode = MeasureSpec.getMode(widthMeasureSpec)
-        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
-        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
-        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
-
-
-        val width = when (widthMode) {
-            MeasureSpec.EXACTLY -> widthSize
-            MeasureSpec.AT_MOST -> min(size, widthSize.toFloat()).roundToInt()
-            else -> size.toInt()
-        }
-
-        val height = when (heightMode) {
-            MeasureSpec.EXACTLY -> heightSize
-            MeasureSpec.AT_MOST -> min(size, heightSize.toFloat()).roundToInt()
-            else -> size.toInt()
-        }
-
-        setMeasuredDimension(width, height)*/
-
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val size =
-            widthMeasureSpec.coerceAtMost(heightMeasureSpec)
-
-        setMeasuredDimension(size, size)
-    }
-
-    @SuppressLint("ResourceType")
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
-        size = w.coerceAtMost(h)
-        boardSize = size / countOfCells
-        this.generateBoard()
-    }
-
-    private fun generateBoard() {
-        var row = 0
-        val cells = countOfCells * countOfCells
-
-        for (index in 1..cells) {
-            var column = (index % countOfCells) - 1
-            if (column < 0) {
-                column = countOfCells - 1
-            }
-            val rect = Rect()
-            with(rect) {
-                top = row * boardSize
-                left = column * boardSize
-                right = left + boardSize
-                bottom = top + boardSize
-            }
-            boardList.add(rect)
-
-            if (index % countOfCells == 0) {
-                row = index / countOfCells
-            }
-        }
-    }
-
-    override fun onDraw(canvas: Canvas) {
-        drawBoard(canvas)
-        super.onDraw(canvas)
-    }
-
-    private fun drawBoard(canvas: Canvas) {
-        paint.color = borderColor
-        var nextLastOfRow = countOfCells - 1
-
-        boardList.forEachIndexed { index, rect ->
-            if (index < countOfCells * (countOfCells - 1)) {
-                // нижний разделитель
-                canvas.drawLine(
-                    rect.left.toFloat(),
-                    rect.bottom.toFloat(),
-                    rect.right.toFloat(),
-                    rect.bottom.toFloat(),
-                    paint
-                )
-            }
-
-            if (index == nextLastOfRow) {
-                println(nextLastOfRow)
-                nextLastOfRow += countOfCells
-            } else {
-                // боковой разделитель
-                canvas.drawLine(
-                    rect.right.toFloat(),
-                    rect.top.toFloat(),
-                    rect.right.toFloat(),
-                    rect.bottom.toFloat(),
-                    paint
-                )
-            }
-
-        }
-    }
-
-
-    companion object {
-        const val DEFAULT_STROKE_WIDTH = 3F
-
-        enum class State {
-            Blank,
-            Cross,
-            Circle
-        }
-    }
-}
- */
-
-/*
-
-private val boardSize = 300
-
-override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-    super.onSizeChanged(w, h, oldw, oldh)
-    val size = w.coerceAtMost(h)
-    boardSize = size / countOfCells
-    this.generateBoard()
-}
-
-
-
-override fun onDraw(canvas: Canvas) {
-    canvas.drawCircle(
-        (width / 2).toFloat(),
-        (height / 2).toFloat(),
-        (width / 2).toFloat(),
-        paint
-    )
-    super.onDraw(canvas)
-
-}
-
-companion object {
-    const val defSize = 300
-    const val defBoardSize = 3
-}*/
