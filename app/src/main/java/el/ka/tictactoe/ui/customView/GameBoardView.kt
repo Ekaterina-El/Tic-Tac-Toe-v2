@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import el.ka.tictactoe.R
@@ -53,9 +52,19 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
     private var circleColor = Color.BLACK
 
     init {
-        startGame()
+        startNewGame()
         borderColor = attr.getColor(
             R.styleable.GameBoardView_borderColor,
+            Color.BLACK
+        )
+
+        crossColor = attr.getColor(
+            R.styleable.GameBoardView_crossColor,
+            Color.BLACK
+        )
+
+        circleColor = attr.getColor(
+            R.styleable.GameBoardView_circleColor,
             Color.BLACK
         )
 
@@ -69,7 +78,7 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
     }
 
-    fun startGame() {
+    private fun startNewGame() {
         currentPlayer = Player.X
     }
 

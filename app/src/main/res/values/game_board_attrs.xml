@@ -4,5 +4,7 @@
 
         <attr name="countOfCells" format="integer" />
         <attr name="borderColor" format="color" />
+        <attr name="crossColor" format="color" />
+        <attr name="circleColor" format="color" />
     </declare-styleable>
 </resources>

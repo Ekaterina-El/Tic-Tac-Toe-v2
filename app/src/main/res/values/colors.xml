@@ -10,7 +10,7 @@
 
     <color name="boardColor">#fff</color>
     <color name="crossColor">#F3A723</color>
-    <color name="circleColor">#4EE3C2</color>
+    <color name="circleColor">#FFDE30</color>
 
     <color name="bg">#FEFFFF</color>
     <color name="main_text_color">#fff</color>

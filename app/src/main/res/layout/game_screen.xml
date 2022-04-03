@@ -42,6 +42,8 @@
                     tools:text="Player X" />
 
                 <el.ka.tictactoe.ui.customView.GameBoardView
+                    app:crossColor="@color/crossColor"
+                    app:circleColor="@color/circleColor"
                     android:id="@+id/game_board"
                     android:layout_width="@dimen/game_board_size"
                     android:layout_height="@dimen/game_board_size"
