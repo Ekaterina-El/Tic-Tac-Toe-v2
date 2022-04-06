@@ -103,8 +103,17 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
     }
 
     private fun startNewGame() {
+        initBoardState()
         setCurrentGameState(GameState.Game)
         setCurrentPlayer(Player.X)
+
+        playerXChoice.clear()
+        playerOChoice.clear()
+        winnerChoice.clear()
+
+//        boardList
+
+        invalidate()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -211,6 +220,7 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
         path.moveTo(block.right.toFloat() - offset, block.top.toFloat() + offset)
         path.lineTo(block.left.toFloat() + offset, block.bottom.toFloat() - offset)
         canvas.drawPath(path, paint)
+        path.reset()
     }
 
     private fun drawCircle(canvas: Canvas, block: Rect) {
@@ -288,6 +298,8 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
                 setCurrentPlayer(currentPlayer.not())
                 invalidate()
             }
+        } else {
+            startNewGame()
         }
         return true
     }
