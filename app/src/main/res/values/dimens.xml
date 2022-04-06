@@ -11,6 +11,7 @@
     <dimen name="player_state_ml">30dp</dimen>
     <dimen name="player_state_title_mb">5dp</dimen>
     <dimen name="quit_mt">60dp</dimen>
+    <dimen name="quit_mt_dialog">30dp</dimen>
 
 
 </resources>

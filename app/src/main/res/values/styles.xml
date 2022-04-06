@@ -9,6 +9,10 @@
         <item name="android:padding">@dimen/btn_padding</item>
     </style>
 
+    <style name="btn_dark" parent="btn">
+        <item name="android:background">@drawable/btn_wrapper_drak</item>
+    </style>
+
     <style name="btn_image">
         <item name="android:layout_marginHorizontal">@dimen/image_margin</item>
         <item name="android:layout_width">@dimen/btn_image_size</item>

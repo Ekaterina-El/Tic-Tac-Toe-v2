@@ -4,8 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/TicTacToe/app/src/main/res/drawable/btn_wrapper.xml" value="0.2265" />
+        <entry key="..\:/TicTacToe/app/src/main/res/drawable/btn_wrapper_drak.xml" value="0.174" />
         <entry key="..\:/TicTacToe/app/src/main/res/drawable/ic_robot.xml" value="0.2265" />
         <entry key="..\:/TicTacToe/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/TicTacToe/app/src/main/res/layout/game.xml" value="0.25416666666666665" />
+        <entry key="..\:/TicTacToe/app/src/main/res/layout/game_end_block.xml" value="0.264" />
         <entry key="..\:/TicTacToe/app/src/main/res/layout/game_screen.xml" value="0.2" />
         <entry key="..\:/TicTacToe/app/src/main/res/layout/main_screen.xml" value="0.264" />
         <entry key="..\:/TicTacToe/app/src/main/res/layout/splash_screen.xml" value="0.25416666666666665" />

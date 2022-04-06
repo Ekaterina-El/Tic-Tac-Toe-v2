@@ -16,4 +16,6 @@
     <color name="main_text_color">#fff</color>
     <color name="cup_win">#FFB802</color>
     <color name="cup_empty">#fff</color>
+    <color name="dialog_bg">#fff</color>
+    <color name="second_color">#359DE8</color>
 </resources>
