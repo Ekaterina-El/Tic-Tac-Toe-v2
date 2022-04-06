@@ -6,6 +6,7 @@ import android.content.res.TypedArray
 import android.graphics.*
 import android.os.SystemClock
 import android.util.AttributeSet
+import android.util.EventLog
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -110,7 +111,10 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
                 robotMove()
             }
 
-            eventListener?.onChangePlayer(currentPlayer)
+            if (currentGameState == GameState.Game) {
+                eventListener?.onChangePlayer(currentPlayer)
+            }
+
         }
     }
 
@@ -204,12 +208,20 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
     private fun robotMove() {
         var randomCell = getRandom(0, boardStateList.size - 1)
-        while (boardStateList[randomCell] == State.Circle &&
-            boardStateList[randomCell] == State.Cross
+        while (boardStateList[randomCell] != State.Blank
         ) {
             randomCell = getRandom(0, boardStateList.size - 1)
         }
-        boardList.find { rect ->
+        val event = MotionEvent.obtain(
+            SystemClock.uptimeMillis(),
+            SystemClock.uptimeMillis(),
+            MotionEvent.ACTION_UP,
+            boardList[randomCell].exactCenterX(),
+            boardList[randomCell].exactCenterY(),
+            0
+        )
+        onTouchEvent(event)
+        /*boardList.find { rect ->
             rect.contains(
                 boardList[randomCell].exactCenterX().toInt(),
                 boardList[randomCell].exactCenterY().toInt()
@@ -223,7 +235,7 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
             findWinner()
             setCurrentPlayer(currentPlayer.not())
             invalidate()
-        }
+        }*/
     }
 
     private fun getRandom(min: Int, max: Int): Int =
@@ -332,7 +344,10 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
                     boardStateList[index] = State.Circle
                 }
                 findWinner()
-                setCurrentPlayer(currentPlayer.not())
+
+                if (currentGameState == GameState.Game) {
+                    setCurrentPlayer(currentPlayer.not())
+                }
                 invalidate()
             }
         } else {
