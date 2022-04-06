@@ -4,12 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.*
+import android.os.SystemClock
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import el.ka.tictactoe.R
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
@@ -18,6 +20,8 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
     fun setEventListener(el: GameBoardEventListener) {
         eventListener = el
     }
+
+    private var gameType: GameType = GameType.Robot
 
     private var currentGameState: GameState = GameState.Game
 
@@ -97,7 +101,15 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
     private fun setCurrentPlayer(player: Player) {
         currentPlayer = player
+
         if (currentGameState == GameState.Game) {
+            if (
+                player == Player.O
+                && gameType == GameType.Robot
+            ) {
+                robotMove()
+            }
+
             eventListener?.onChangePlayer(currentPlayer)
         }
     }
@@ -187,11 +199,36 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
         }
         drawBoard(canvas)
         drawCells(canvas)
-
-
         super.onDraw(canvas)
-
     }
+
+    private fun robotMove() {
+        var randomCell = getRandom(0, boardStateList.size - 1)
+        while (boardStateList[randomCell] == State.Circle &&
+            boardStateList[randomCell] == State.Cross
+        ) {
+            randomCell = getRandom(0, boardStateList.size - 1)
+        }
+        boardList.find { rect ->
+            rect.contains(
+                boardList[randomCell].exactCenterX().toInt(),
+                boardList[randomCell].exactCenterY().toInt()
+            )
+        }?.apply {
+            val index = boardList.indexOf(this)
+
+            playerOChoice.add(index)
+            boardStateList[index] = State.Circle
+
+            findWinner()
+            setCurrentPlayer(currentPlayer.not())
+            invalidate()
+        }
+    }
+
+    private fun getRandom(min: Int, max: Int): Int =
+        (Math.random() * (max - min) + min).roundToInt()
+
 
     private fun drawWinnerLine(canvas: Canvas) {
         paint.color = winnerLineColor
@@ -409,7 +446,7 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
             Cross,
             Circle;
 
-            fun toPlayer(): GameBoardView.Companion.Player? {
+            fun toPlayer(): Player? {
                 return when (this) {
                     Cross -> Player.X
                     Circle -> Player.O
@@ -434,6 +471,11 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
                     O -> X
                 }
             }
+        }
+
+        enum class GameType {
+            Robot,
+            Friend
         }
     }
 }

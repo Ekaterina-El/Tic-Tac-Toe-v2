@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import el.ka.tictactoe.R
 import el.ka.tictactoe.general.APP
-import el.ka.tictactoe.general.GameType
 import el.ka.tictactoe.ui.customView.GameBoardView
+import el.ka.tictactoe.ui.customView.GameBoardView.Companion.GameType
 import el.ka.tictactoe.ui.customView.GameBoardView.Companion.Player.O
 import el.ka.tictactoe.ui.customView.GameBoardView.Companion.Player.X
 
@@ -18,22 +18,13 @@ class GameScreenViewModel(application: Application) : AndroidViewModel(applicati
     val gameType: LiveData<GameType>
         get() = _gameType
 
-    private val _scoreX = MutableLiveData<Int>(0)
+    private val _scoreX = MutableLiveData(0)
     val scoreX: LiveData<Int>
         get() = _scoreX
 
-    private val _scoreO = MutableLiveData<Int>(0)
+    private val _scoreO = MutableLiveData(0)
     val scoreO: LiveData<Int>
         get() = _scoreO
-
-    fun makeMove() {
-//        when (_currentPlayer.value) {
-//            Player.X -> _scoreX.value = _scoreX.value!!.plus(1)
-//            Player.O -> _scoreO.value = _scoreO.value!!.plus(1)
-//            else -> return
-//        }
-//        _currentPlayer.value = !_currentPlayer.value!!
-    }
 
 
     private val _currentState = MutableLiveData("Player $X")
@@ -71,8 +62,5 @@ class GameScreenViewModel(application: Application) : AndroidViewModel(applicati
             X -> _scoreX.value = _scoreX.value!!.plus(1)
             O -> _scoreO.value = _scoreO.value!!.plus(1)
         }
-
     }
-
-
 }

@@ -42,15 +42,16 @@
                     tools:text="Player X" />
 
                 <el.ka.tictactoe.ui.customView.GameBoardView
-                    app:crossColor="@color/crossColor"
-                    app:circleColor="@color/circleColor"
+
                     android:id="@+id/game_board"
                     android:layout_width="@dimen/game_board_size"
                     android:layout_height="@dimen/game_board_size"
                     android:layout_marginVertical="@dimen/game_board_margin"
                     app:borderColor="@color/boardColor"
-                    app:countOfCells="@{fragmentViewModel.gameBoardSize}" />
-
+                    app:circleColor="@color/circleColor"
+                    app:countOfCells="@{fragmentViewModel.gameBoardSize}"
+                    app:crossColor="@color/crossColor"
+                    />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

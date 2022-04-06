@@ -19,9 +19,10 @@ import el.ka.tictactoe.R
 import el.ka.tictactoe.databinding.GameScreenBinding
 import el.ka.tictactoe.general.APP
 import el.ka.tictactoe.general.GAME_BOARD_SIZE
-import el.ka.tictactoe.general.GameType
 import el.ka.tictactoe.general.GAME_TYPE_KEY
 import el.ka.tictactoe.ui.customView.GameBoardEventListener
+import el.ka.tictactoe.ui.customView.GameBoardView
+import el.ka.tictactoe.ui.customView.GameBoardView.Companion.GameType
 import el.ka.tictactoe.ui.customView.GameBoardView.Companion.Player
 
 class GameScreenFragment : Fragment(), GameBoardEventListener {

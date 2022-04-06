@@ -6,5 +6,6 @@
         <attr name="borderColor" format="color" />
         <attr name="crossColor" format="color" />
         <attr name="circleColor" format="color" />
+        <attr name="gameType" format="string" />
     </declare-styleable>
 </resources>
