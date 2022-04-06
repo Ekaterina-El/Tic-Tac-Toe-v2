@@ -16,7 +16,7 @@ enum class GameType(val index: Int) {
     Friend(2)
 }
 
-enum class Player {
+/*enum class Player {
     X,
     O;
 
@@ -27,6 +27,6 @@ enum class Player {
             else -> X
         }
     }
-}
+}*/
 const val GAME_TYPE_KEY = "GameType"
 const val GAME_BOARD_SIZE = "GameBoardSize"

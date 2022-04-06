@@ -1,14 +1,16 @@
 package el.ka.tictactoe.ui.screens.gameScreen
 
-import android.graphics.Color
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import el.ka.tictactoe.R
 import el.ka.tictactoe.general.APP
 import el.ka.tictactoe.general.GameType
-import el.ka.tictactoe.general.Player
+import el.ka.tictactoe.ui.customView.GameBoardView.Companion.Player.O
+import el.ka.tictactoe.ui.customView.GameBoardView.Companion.Player.X
 
-class GameScreenViewModel: ViewModel() {
+class GameScreenViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private val _gameType = MutableLiveData(GameType.Robot)
@@ -29,13 +31,20 @@ class GameScreenViewModel: ViewModel() {
 //            Player.O -> _scoreO.value = _scoreO.value!!.plus(1)
 //            else -> return
 //        }
-        _currentPlayer.value = !_currentPlayer.value!!
+//        _currentPlayer.value = !_currentPlayer.value!!
     }
 
 
-    private val _currentPlayer = MutableLiveData(Player.X)
-    val currentPlayer: MutableLiveData<Player>
-        get() = _currentPlayer
+    private val _currentState = MutableLiveData("Player $X")
+    val currentState: MutableLiveData<String>
+        get() = _currentState
+
+    fun setCurrentState(player: String) {
+        if (player == O.toString() || player == X.toString()) {
+            val res = getApplication<Application>().resources
+            _currentState.value = "${res.getString(R.string.player)} $player"
+        }
+    }
 
     fun goBack() {
         APP.navController.navigateUp()
@@ -53,4 +62,6 @@ class GameScreenViewModel: ViewModel() {
     fun setGameBoardSize(gameSize: Int) {
         _gameBoardSize.value = gameSize
     }
+
+
 }

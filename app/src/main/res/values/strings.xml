@@ -14,4 +14,5 @@
     <string name="friend">Friend</string>
     <string name="robot">Robot</string>
     <string name="current_player">Player %s</string>
+    <string name="player">Player</string>
 </resources>

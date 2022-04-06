@@ -11,8 +11,10 @@ import el.ka.tictactoe.databinding.GameScreenBinding
 import el.ka.tictactoe.general.GAME_BOARD_SIZE
 import el.ka.tictactoe.general.GameType
 import el.ka.tictactoe.general.GAME_TYPE_KEY
+import el.ka.tictactoe.ui.customView.GameBoardEventListener
+import el.ka.tictactoe.ui.customView.GameBoardView
 
-class GameScreenFragment : Fragment() {
+class GameScreenFragment : Fragment(), GameBoardEventListener {
     private lateinit var gameBoardObserver: Observer<Int>
     private lateinit var viewModel: GameScreenViewModel
     private lateinit var binding: GameScreenBinding
@@ -54,6 +56,7 @@ class GameScreenFragment : Fragment() {
         gameBoardObserver = Observer<Int> { value ->
             binding.gameBoard.setCountOfCells(value)
         }
+        binding.gameBoard.setEventListener(this)
         viewModel.gameBoardSize.observe(viewLifecycleOwner, gameBoardObserver)
 
     }
@@ -61,5 +64,9 @@ class GameScreenFragment : Fragment() {
     override fun onDestroy() {
         viewModel.gameBoardSize.removeObserver(gameBoardObserver)
         super.onDestroy()
+    }
+
+    override fun onChangePlayer(player: GameBoardView.Companion.Player) {
+        viewModel.setCurrentState(player.toString())
     }
 }

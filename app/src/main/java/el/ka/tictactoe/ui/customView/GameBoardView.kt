@@ -12,6 +12,13 @@ import el.ka.tictactoe.R
 import kotlin.math.min
 
 class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+
+    private var eventListener: GameBoardEventListener? = null
+
+    public fun setEventListener(el: GameBoardEventListener) {
+        eventListener = el
+    }
+
     private val winLines = mutableListOf<MutableList<Int>>()
     private val playerOChoice = mutableListOf<Int>()
     private val playerXChoice = mutableListOf<Int>()
@@ -27,7 +34,7 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
     private var redrawBoard = false
 
     private var _countOfCells = 0
-    val countOfCells: Int
+    private val countOfCells: Int
         get() = _countOfCells
 
     fun setCountOfCells(newSize: Int) {
@@ -84,8 +91,13 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
     }
 
+    private fun setCurrentPlayer(player: Player)  {
+        currentPlayer = player
+        eventListener?.onChangePlayer(currentPlayer)
+    }
+
     private fun startNewGame() {
-        currentPlayer = Player.X
+        setCurrentPlayer(Player.X)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -266,7 +278,7 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
                 boardStateList[index] = State.Circle
             }
             findWinner()
-            currentPlayer = currentPlayer.not()
+            setCurrentPlayer(currentPlayer.not())
             invalidate()
         }
         return true
@@ -282,7 +294,7 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
         }
 
         when {
-            isWin(state) -> Log.d("Find_Winner", "${state} was won")
+            isWin(state) -> Log.d("Find_Winner", "$state was won")
             isDraw() -> Log.d("Find_Winner", "End in a draw")
             else -> return
         }
