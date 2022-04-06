@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import el.ka.tictactoe.R
 import el.ka.tictactoe.general.APP
 import el.ka.tictactoe.general.GameType
+import el.ka.tictactoe.ui.customView.GameBoardView
 import el.ka.tictactoe.ui.customView.GameBoardView.Companion.Player.O
 import el.ka.tictactoe.ui.customView.GameBoardView.Companion.Player.X
 
@@ -63,6 +64,14 @@ class GameScreenViewModel(application: Application) : AndroidViewModel(applicati
 
     fun setGameBoardSize(gameSize: Int) {
         _gameBoardSize.value = gameSize
+    }
+
+    fun updateScoreFor(player: GameBoardView.Companion.Player) {
+        when (player) {
+            X -> _scoreX.value = _scoreX.value!!.plus(1)
+            O -> _scoreO.value = _scoreO.value!!.plus(1)
+        }
+
     }
 
 

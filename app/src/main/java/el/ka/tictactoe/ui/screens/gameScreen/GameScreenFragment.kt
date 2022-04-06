@@ -14,6 +14,7 @@ import el.ka.tictactoe.general.GameType
 import el.ka.tictactoe.general.GAME_TYPE_KEY
 import el.ka.tictactoe.ui.customView.GameBoardEventListener
 import el.ka.tictactoe.ui.customView.GameBoardView
+import el.ka.tictactoe.ui.customView.GameBoardView.Companion.Player
 
 class GameScreenFragment : Fragment(), GameBoardEventListener {
     private lateinit var gameBoardObserver: Observer<Int>
@@ -67,13 +68,14 @@ class GameScreenFragment : Fragment(), GameBoardEventListener {
         super.onDestroy()
     }
 
-    override fun onChangePlayer(player: GameBoardView.Companion.Player) {
+    override fun onChangePlayer(player: Player) {
         viewModel.setCurrentState(player.toString())
     }
 
-    override fun onWin(player: GameBoardView.Companion.Player) {
+    override fun onWin(player: Player) {
         viewModel.setCurrentState(
             "$player ${this.getString(R.string.won_this_game)}"
         )
+        viewModel.updateScoreFor(player)
     }
 }
