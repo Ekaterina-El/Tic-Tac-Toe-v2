@@ -39,11 +39,13 @@ class GameScreenViewModel(application: Application) : AndroidViewModel(applicati
     val currentState: MutableLiveData<String>
         get() = _currentState
 
-    fun setCurrentState(player: String) {
-        if (player == O.toString() || player == X.toString()) {
+    fun setCurrentState(state: String) {
+        if (state == O.toString() || state == X.toString()) {
             val res = getApplication<Application>().resources
-            _currentState.value = "${res.getString(R.string.player)} $player"
+            _currentState.value = "${res.getString(R.string.player)} $state"
+            return
         }
+        _currentState.value = state
     }
 
     fun goBack() {

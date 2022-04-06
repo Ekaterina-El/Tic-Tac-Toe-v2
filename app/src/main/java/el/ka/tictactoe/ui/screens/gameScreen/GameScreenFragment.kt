@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import el.ka.tictactoe.R
 import el.ka.tictactoe.databinding.GameScreenBinding
 import el.ka.tictactoe.general.GAME_BOARD_SIZE
 import el.ka.tictactoe.general.GameType
@@ -68,5 +69,11 @@ class GameScreenFragment : Fragment(), GameBoardEventListener {
 
     override fun onChangePlayer(player: GameBoardView.Companion.Player) {
         viewModel.setCurrentState(player.toString())
+    }
+
+    override fun onWin(player: GameBoardView.Companion.Player) {
+        viewModel.setCurrentState(
+            "$player ${this.getString(R.string.won_this_game)}"
+        )
     }
 }

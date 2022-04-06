@@ -15,8 +15,14 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
     private var eventListener: GameBoardEventListener? = null
 
-    public fun setEventListener(el: GameBoardEventListener) {
+    fun setEventListener(el: GameBoardEventListener) {
         eventListener = el
+    }
+
+    private var currentGameState: GameState = GameState.Game
+
+    private fun setCurrentGameState(newGameState: GameState) {
+        currentGameState = newGameState
     }
 
     private val winLines = mutableListOf<MutableList<Int>>()
@@ -30,8 +36,6 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
     private var boardSize = 0
     private var size = 0
-
-    private var redrawBoard = false
 
     private var _countOfCells = 0
     private val countOfCells: Int
@@ -91,12 +95,15 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
     }
 
-    private fun setCurrentPlayer(player: Player)  {
+    private fun setCurrentPlayer(player: Player) {
         currentPlayer = player
-        eventListener?.onChangePlayer(currentPlayer)
+        if (currentGameState == GameState.Game) {
+            eventListener?.onChangePlayer(currentPlayer)
+        }
     }
 
     private fun startNewGame() {
+        setCurrentGameState(GameState.Game)
         setCurrentPlayer(Player.X)
     }
 
@@ -129,7 +136,6 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
     private fun initBoard() {
         initBoardState()
         generateBoard()
-        redrawBoard = true
     }
 
     private fun initBoardState() {
@@ -264,22 +270,24 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
     }
 
     private fun updateBoardState(event: MotionEvent): Boolean {
-        boardList.find { rect ->
-            rect.contains(event.x.toInt(), event.y.toInt())
-        }?.apply {
-            val index = boardList.indexOf(this)
-            if (boardStateList[index] != State.Blank) return true
+        if (currentGameState == GameState.Game) {
+            boardList.find { rect ->
+                rect.contains(event.x.toInt(), event.y.toInt())
+            }?.apply {
+                val index = boardList.indexOf(this)
+                if (boardStateList[index] != State.Blank) return true
 
-            if (currentPlayer == Player.X) {
-                playerXChoice.add(index)
-                boardStateList[index] = State.Cross
-            } else {
-                playerOChoice.add(index)
-                boardStateList[index] = State.Circle
+                if (currentPlayer == Player.X) {
+                    playerXChoice.add(index)
+                    boardStateList[index] = State.Cross
+                } else {
+                    playerOChoice.add(index)
+                    boardStateList[index] = State.Circle
+                }
+                findWinner()
+                setCurrentPlayer(currentPlayer.not())
+                invalidate()
             }
-            findWinner()
-            setCurrentPlayer(currentPlayer.not())
-            invalidate()
         }
         return true
     }
@@ -303,6 +311,8 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
     private fun isWin(player: State): Boolean {
         for (i in 0 until winLines.size) {
             if (checkLine(player, winLines[i])) {
+                setCurrentGameState(GameState.Won)
+                eventListener?.onWin(player.toPlayer()!!)
                 return true
             }
         }
@@ -317,7 +327,7 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
         for (row in 0 until size) {
             val solution = mutableListOf<Int>()
             for (col in 0 until size) {
-               solution.add(size * row + col)
+                solution.add(size * row + col)
             }
             winLines.add(solution)
         }
@@ -332,7 +342,7 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
         for ((row, col) in (0 until size).withIndex()) {
             d1.add(row * size + col)
-                d2.add(row*size + (size-col-1))
+            d2.add(row * size + (size - col - 1))
         }
 
         winLines.add(d1)
@@ -374,7 +384,8 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
         return response
     }
 
-    private fun isDraw(): Boolean = playerOChoice.size + playerXChoice.size == countOfCells*countOfCells
+    private fun isDraw(): Boolean =
+        playerOChoice.size + playerXChoice.size == countOfCells * countOfCells
     // endregion
 
     companion object {
@@ -384,7 +395,21 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
         enum class State {
             Blank,
             Cross,
-            Circle
+            Circle;
+
+            fun toPlayer(): GameBoardView.Companion.Player? {
+                return when (this) {
+                    Cross -> Player.X
+                    Circle -> Player.O
+                    else -> null
+                }
+            }
+        }
+
+        enum class GameState {
+            Game,
+            Won,
+            Draw
         }
 
         enum class Player {
