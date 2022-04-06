@@ -17,4 +17,5 @@
     <string name="player">Player</string>
     <string name="won_this_game">won this game</string>
     <string name="win">Yepii...Player %s win</string>
+    <string name="isDraw">Draw game</string>
 </resources>

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import el.ka.tictactoe.R
 import el.ka.tictactoe.general.*
-import el.ka.tictactoe.ui.customView.GameBoardView
 import el.ka.tictactoe.ui.customView.GameBoardView.Companion.GameType
 
 class MainScreenViewModel: ViewModel() {

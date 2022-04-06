@@ -6,7 +6,6 @@ import android.content.res.TypedArray
 import android.graphics.*
 import android.os.SystemClock
 import android.util.AttributeSet
-import android.util.EventLog
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -353,6 +352,9 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
                 if (currentGameState == GameState.Game) {
                     setCurrentPlayer(currentPlayer.not())
                 }
+                if (isDraw()) {
+                    eventListener?.onDraw()
+                }
                 invalidate()
             }
         } else {
@@ -372,7 +374,9 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
         when {
             isWin(state) -> Log.d("Find_Winner", "$state was won")
-            isDraw() -> Log.d("Find_Winner", "End in a draw")
+            isDraw() -> {
+                eventListener?.onDraw()
+            }
             else -> return
         }
     }
@@ -453,8 +457,15 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
         return response
     }
 
-    private fun isDraw(): Boolean =
-        playerOChoice.size + playerXChoice.size == countOfCells * countOfCells
+    private fun isDraw(): Boolean {
+        var isDraw = playerOChoice.size + playerXChoice.size == countOfCells * countOfCells
+        if (isDraw) {
+            setCurrentGameState(GameState.Draw)
+        }
+        return isDraw
+    }
+
+
     // endregion
 
     companion object {

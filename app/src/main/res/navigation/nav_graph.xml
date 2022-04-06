@@ -28,9 +28,7 @@
             app:destination="@id/mainScreenFragment" />
 
         <argument android:name="withWhom"
-            android:defaultValue="Robot"
-            app:nullable="false"
-            app:argType="el.ka.tictactoe.general.GameType" />
+            app:argType="el.ka.tictactoe.ui.customView.GameBoardView$Companion$GameType" />
 
         <argument android:name="boardSize"
             android:defaultValue="3"

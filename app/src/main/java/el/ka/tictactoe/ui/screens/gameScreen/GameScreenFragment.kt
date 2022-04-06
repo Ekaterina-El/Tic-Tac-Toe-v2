@@ -10,8 +10,6 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,7 +19,6 @@ import el.ka.tictactoe.general.APP
 import el.ka.tictactoe.general.GAME_BOARD_SIZE
 import el.ka.tictactoe.general.GAME_TYPE_KEY
 import el.ka.tictactoe.ui.customView.GameBoardEventListener
-import el.ka.tictactoe.ui.customView.GameBoardView
 import el.ka.tictactoe.ui.customView.GameBoardView.Companion.GameType
 import el.ka.tictactoe.ui.customView.GameBoardView.Companion.Player
 
@@ -96,6 +93,10 @@ class GameScreenFragment : Fragment(), GameBoardEventListener {
         } else if (viewModel.scoreX.value!! == 3) {
             showEndGameDialog(Player.X)
         }
+    }
+
+    override fun onDraw() {
+        viewModel.setCurrentState(this.getString(R.string.isDraw))
     }
 
 
