@@ -24,6 +24,11 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
 
     private var gameType: GameType = GameType.Robot
 
+    fun setGameType(newGameType: GameType) {
+        gameType = newGameType
+        startNewGame()
+    }
+
     private var currentGameState: GameState = GameState.Game
 
     private fun setCurrentGameState(newGameState: GameState) {

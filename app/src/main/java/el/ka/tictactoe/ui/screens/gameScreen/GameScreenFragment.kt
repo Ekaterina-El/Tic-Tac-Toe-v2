@@ -71,6 +71,7 @@ class GameScreenFragment : Fragment(), GameBoardEventListener {
             binding.gameBoard.setCountOfCells(value)
         }
         binding.gameBoard.setEventListener(this)
+        binding.gameBoard.setGameType(gameType)
         viewModel.gameBoardSize.observe(viewLifecycleOwner, gameBoardObserver)
 
     }
