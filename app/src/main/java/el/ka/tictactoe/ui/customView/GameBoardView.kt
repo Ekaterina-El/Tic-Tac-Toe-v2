@@ -225,21 +225,6 @@ class GameBoardView(context: Context, attrs: AttributeSet) : View(context, attrs
             0
         )
         onTouchEvent(event)
-        /*boardList.find { rect ->
-            rect.contains(
-                boardList[randomCell].exactCenterX().toInt(),
-                boardList[randomCell].exactCenterY().toInt()
-            )
-        }?.apply {
-            val index = boardList.indexOf(this)
-
-            playerOChoice.add(index)
-            boardStateList[index] = State.Circle
-
-            findWinner()
-            setCurrentPlayer(currentPlayer.not())
-            invalidate()
-        }*/
     }
 
     private fun getRandom(min: Int, max: Int): Int =

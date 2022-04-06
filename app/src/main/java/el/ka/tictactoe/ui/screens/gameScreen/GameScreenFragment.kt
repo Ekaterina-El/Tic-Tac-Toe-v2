@@ -3,7 +3,9 @@ package el.ka.tictactoe.ui.screens.gameScreen
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,8 +23,14 @@ import el.ka.tictactoe.general.GAME_TYPE_KEY
 import el.ka.tictactoe.ui.customView.GameBoardEventListener
 import el.ka.tictactoe.ui.customView.GameBoardView.Companion.GameType
 import el.ka.tictactoe.ui.customView.GameBoardView.Companion.Player
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class GameScreenFragment : Fragment(), GameBoardEventListener {
+    private lateinit var setCellMusic: MediaPlayer
+
     private lateinit var gameBoardObserver: Observer<Int>
 
     private lateinit var viewModel: GameScreenViewModel
@@ -36,8 +44,14 @@ class GameScreenFragment : Fragment(), GameBoardEventListener {
         savedInstanceState: Bundle?
     ): View {
         createBinding(inflater)
+        initMusicEffects()
         return binding.root
     }
+
+    fun initMusicEffects() {
+        setCellMusic = MediaPlayer.create(APP, R.raw.cartoon_pop)
+    }
+
 
     private fun createBinding(inflater: LayoutInflater) {
         createViewModel()
@@ -98,7 +112,6 @@ class GameScreenFragment : Fragment(), GameBoardEventListener {
     override fun onDraw() {
         viewModel.setCurrentState(this.getString(R.string.isDraw))
     }
-
 
     private fun showEndGameDialog(player: Player) {
         endGameDialog = Dialog(APP)
