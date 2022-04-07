@@ -63,7 +63,12 @@ Differences from the first version:
 [🎬Demo - YouTube] Soon... (or not😊)
 
 ### Srceenshots
-![image 3](https://user-images.githubusercontent.com/55324828/123393867-f6b94300-d5b7-11eb-9c78-a8dd248ab8d2.png) ![image 4](https://user-images.githubusercontent.com/55324828/123393875-f91b9d00-d5b7-11eb-9597-7a292b083a49.png) ![image 5](https://user-images.githubusercontent.com/55324828/123393879-fa4cca00-d5b7-11eb-9ee4-a2d59e35e647.png)
+![image 1](https://github.com/Ekaterina-El/Tic-Tac-Toe-v2/blob/master/screenshots/1.png) 
+![image 2](https://github.com/Ekaterina-El/Tic-Tac-Toe-v2/blob/master/screenshots/2.png)
+![image 3](https://github.com/Ekaterina-El/Tic-Tac-Toe-v2/blob/master/screenshots/3.png)
+![image 4](https://github.com/Ekaterina-El/Tic-Tac-Toe-v2/blob/master/screenshots/4.png)
+![image 5](https://github.com/Ekaterina-El/Tic-Tac-Toe-v2/blob/master/screenshots/5.png)
+![image 6](https://github.com/Ekaterina-El/Tic-Tac-Toe-v2/blob/master/screenshots/6.png)
 
 
 <!-- CONTACT -->
