@@ -45,6 +45,7 @@ Differences from the first version:
 - To the previously existing mode - playing with a friend, it became possible to play with a robot (in fact, it's just random🤪).
 - The design has changed a lot
 - Also, it became possible to track the account
+- Added background music
 
 
 ### Built With
